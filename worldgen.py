@@ -3,7 +3,8 @@ import random
 import sqlite3
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import PersonClass as per
+import person as per
+import tile
 
 engine = create_engine('sqlite:///World.db')
 Session = sessionmaker(bind=engine)

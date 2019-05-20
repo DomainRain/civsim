@@ -1,6 +1,7 @@
 import names
 import random
 import sqlite3
+import resources
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
@@ -27,6 +28,7 @@ class Person(Base):
     fatherID = Column(Integer)
     motherID = Column(Integer)
     children = relationship("Children")
+    resources = relationship("Resources")
 
     def __init__(self, lastName=None):
         """The standard constructor will create an average person that has
