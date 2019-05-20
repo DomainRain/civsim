@@ -11,4 +11,12 @@ class Resources(Base):
     id = Column(Integer, primary_key=True)
     wood = Column(Integer)
     iron = Column(Integer)
+    flint = Column(Integer)
+    berries = Column(Integer)
+    meat = Column(Integer)
+    axe = Column(Integer)
+    pickaxe = Column(Integer)
+    hoe = Column(Integer)
+    bow = Column(Integer)
+    arrows = Column(Integer)
     #add more resources as required
