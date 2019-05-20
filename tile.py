@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String
 Base = declarative_base()
 
 
-class grid(Base):
+class Tile(Base):
     __tablename__ = 'Tile'
 
     tid = Column(Integer, primary_key=True)
