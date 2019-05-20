@@ -8,7 +8,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 Base = declarative_base()
 
-association_table = Table('resource_association'. Base.metadata,
+association_table = Table('resource_association', Base.metadata,
                             Column('people', Integer, ForeignKey('people.pid')),
                             Column('tile', Integer, ForeignKey('tile.pid')),
                             Column('resources', Integer, ForeignKey('ownerID'))
