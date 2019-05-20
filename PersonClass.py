@@ -6,6 +6,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 Base = declarative_base()
+
 class Person(Base):
     __tablename__ = 'people'
 
@@ -23,6 +24,9 @@ class Person(Base):
     wisdom = Column(Integer)
     charisma = Column(Integer)
     priorityStat = Column(String)
+    fatherID = Column(Integer)
+    motherID = Column(Integer)
+    children = relationship("Children")
 
     def __init__(self, lastName=None):
         """The standard constructor will create an average person that has
@@ -77,33 +81,20 @@ class Person(Base):
         self.wisdom = random.randint(9,12)
         self.charisma = random.randint(9,12)
         #Let the stats get generated randomly evertime, the fuck method will modify them afterwards.
-    class _Parents(Base):
-        """Keeps track of the parents of a person. Is called
-        automatically when a child is born, and should not be called manually.
-        """
-        __tablename__ = 'parents'
-
-        tid = Column(Integer, primary_key=True)
-        uid = Column(Integer, ForeignKey('people.pid'))
-        fatherID = Column(Integer)
-        motherID = Column(Integer)
-
-    class _Children(Base):
-        """Keeps track of a parent's child. Is called automatically when a child
-        is born, and should not be called manually.
-        """
-        __tablename__ = 'children'
-
-        tid = Column(Integer, primary_key=True)
-        uid = Column(Integer, ForeignKey('people.pid'))
-        childID = Column(Integer)
-
     def fuck(self, p2):
         """Two people engage in the art of babymaking to create a new person.
         @args
         p2: The lucky person who's getting thier night rocked.
         """
         p3 = Person(self.lastName)
+        if(self.sex == 1):
+            p3.fatherID = self.pid
+            p3.motherID = p2.pid
+        else:
+            p3.fatherID = p2.pid
+            p3.motherID = self.pid
+        self.children = Children(pid=self.pid)
+        p2.children = Children(pid=self.pid)
         p3.strength = random.randint(min(self.strength, p2.strength), max(self.strength, p2.strength))
         p3.dexterity = random.randint(min(self.dexterity, p2.dexterity), max(self.dexterity, p2.dexterity))
         p3.constitution = random.randint(min(self.constitution, p2.constitution), max(self.constitution, p2.constitution))
@@ -111,3 +102,12 @@ class Person(Base):
         p3.wisdom = random.randint(min(self.wisdom, p2.wisdom), max(self.wisdom, p2.wisdom))
         p3.charisma = random.randint(min(self.charisma, p2.charisma), max(self.charisma, p2.charisma))
         #Modify the stats of the new person such that it is between the parents' stats
+class Children(Base):
+    """Keeps track of a parent's child. Is called automatically when a child
+    is born, and should not be called manually.
+    """
+    __tablename__ = 'children'
+
+    tid = Column(Integer, primary_key=True)
+    pid = Column(Integer, ForeignKey('people.pid'))
+    childID = Column(Integer)
