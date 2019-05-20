@@ -22,8 +22,19 @@ def main():
         p.resources = Resources() #initialize the resources object for this person
         p.resourceID = p.resources.id
         session.add(p)
+    for J in range(10):
+        t = tile.Tile(x=J, y=0, type="beach")
+        t.resources = Resources() #initialize the resources object for this tile
+        t.resourceID = t.resources.id
+        session.add(t)
     session.commit()
     #A quick test to show that everything was stored correctly
     for instance in session.query(per.Person).order_by(per.Person.pid):
         print(instance.firstName, instance.lastName, instance.resources.id)
+    for instance in session.query(tile.Tile).order_by(tile.Tile.tid):
+        print(instance.x, instance.y, instance.resources.id)
+    # instance = session.query(per.Person)
+    # print(instance.firstName, instance.lastName, instance.resources.id)
+    # instance = session.query(tile.Tile)
+    # print(instance.x, instance.y, instance.resources.id)
 main()
