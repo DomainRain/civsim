@@ -101,6 +101,7 @@ class Person(Base):
         p3.intelligence = random.randint(min(self.intelligence, p2.intelligence), max(self.intelligence, p2.intelligence))
         p3.wisdom = random.randint(min(self.wisdom, p2.wisdom), max(self.wisdom, p2.wisdom))
         p3.charisma = random.randint(min(self.charisma, p2.charisma), max(self.charisma, p2.charisma))
+        return p3
         #Modify the stats of the new person such that it is between the parents' stats
 class Children(Base):
     """Keeps track of a parent's child. Is called automatically when a child
