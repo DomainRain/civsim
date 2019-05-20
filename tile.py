@@ -1,17 +1,23 @@
 import random
 import sqlite3
-from sqlalchemy.ext.declarative import declarative_base
+import resources
 from sqlalchemy import Column, Integer, String
-Base = declarative_base()
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+from base import Base
 
 
 class Tile(Base):
     __tablename__ = 'Tile'
 
+    resources = relationship('Resources')
+
     tid = Column(Integer, primary_key=True)
     x = Column(Integer)
     y = Column(Integer)
     type = Column(String)
+    resourceID = Column(Integer, ForeignKey('resources.id'))
+
 
     def __init__(self, x, y, type):
         types = list(("deepwater",
