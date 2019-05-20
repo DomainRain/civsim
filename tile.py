@@ -34,3 +34,7 @@ class Tile(Base):
         self.x = x
         self.y = y
         self.type = type
+        self.resources = resources.Resources() #initialize the resources table
+        self.resourceID = self.resources.id
+
+        #TODO: Put resource generation here

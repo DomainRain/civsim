@@ -85,6 +85,8 @@ class Person(Base):
         self.wisdom = random.randint(9,12)
         self.charisma = random.randint(9,12)
         #Let the stats get generated randomly evertime, the fuck method will modify them afterwards.
+        self.resources = resources.Resources() #initialize the resources table
+        self.resourceID = self.resources.id
     def fuck(self, p2):
         """Two people engage in the art of babymaking to create a new person.
         @args
