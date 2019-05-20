@@ -2,14 +2,16 @@ import names
 import random
 import sqlite3
 import resources
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-Base = declarative_base()
+from base import Base
 
 class Person(Base):
     __tablename__ = 'people'
+
+    children = relationship("Children")
+    resources = relationship("Resources")
 
     pid = Column(Integer, primary_key=True)
     firstName = Column(String)
@@ -27,8 +29,8 @@ class Person(Base):
     priorityStat = Column(String)
     fatherID = Column(Integer)
     motherID = Column(Integer)
-    children = relationship("Children")
-    resources = relationship("Resources")
+    resourceID = Column(Integer, ForeignKey('resources.id'))
+
 
     def __init__(self, lastName=None):
         """The standard constructor will create an average person that has
@@ -95,8 +97,9 @@ class Person(Base):
         else:
             p3.fatherID = p2.pid
             p3.motherID = self.pid
-        self.children = Children(pid=self.pid)
-        p2.children = Children(pid=self.pid)
+        self.children = Children(pid=self.pid, childID=p3.pid)
+        p2.children = Children(pid=self.pid, childID=p3.pid)
+        #create entries in the children database for both parents and add the child to the ChildID field
         p3.strength = random.randint(min(self.strength, p2.strength), max(self.strength, p2.strength))
         p3.dexterity = random.randint(min(self.dexterity, p2.dexterity), max(self.dexterity, p2.dexterity))
         p3.constitution = random.randint(min(self.constitution, p2.constitution), max(self.constitution, p2.constitution))
@@ -111,6 +114,6 @@ class Children(Base):
     """
     __tablename__ = 'children'
 
-    tid = Column(Integer, primary_key=True)
-    pid = Column(Integer, ForeignKey('people.pid'))
-    childID = Column(Integer)
+    tid = Column(Integer, primary_key=True) #unique id for this table. Is not needed for anything else
+    pid = Column(Integer, ForeignKey('people.pid')) #the ID of the parent
+    childID = Column(Integer) #the ID of the child
