@@ -27,7 +27,7 @@ class Person(Base):
     wisdom = Column(Integer)
     charisma = Column(Integer)
     priorityStat = Column(String)
-    married = Column(Integer)#1 = married
+    married = Column(String)#person name who is married might look into muiltple marriages
     fatherID = Column(Integer)
     motherID = Column(Integer)
     resourceID = Column(Integer, ForeignKey('resources.id'))
@@ -88,7 +88,6 @@ class Person(Base):
         #Let the stats get generated randomly evertime, the fuck method will modify them afterwards.
         self.resources = resources.Resources() #initialize the resources table
         self.resourceID = self.resources.id
-        self.married = 0
     def fuck(self, p2):
         """Two people engage in the art of babymaking to create a new person.
         @args
