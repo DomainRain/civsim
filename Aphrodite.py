@@ -11,7 +11,7 @@ def MatchMaker(session):
         singles.append(name)
     for single in singles:
         for suitor in singles:
-            if((single == suitor) or (single.married != None)) :
+            if((single == suitor) or (single.married != None) or (suitor.married != None)):
                 continue
             if(single.gay):
                 if(single.sex == suitor.sex):
@@ -25,3 +25,5 @@ def MatchMaker(session):
                         single.married = suitor.pid
                         suitor.married = single.pid
                         print(single.firstName + " got married to " + suitor.firstName)
+    session.add_all(singles)
+    session.commit()
