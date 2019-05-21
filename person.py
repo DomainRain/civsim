@@ -27,7 +27,7 @@ class Person(Base):
     wisdom = Column(Integer)
     charisma = Column(Integer)
     priorityStat = Column(String)
-    married = Column(String)#person name who is married might look into muiltple marriages
+    married = Column(Integer)#person name who is married might look into muiltple marriages
     fatherID = Column(Integer)
     motherID = Column(Integer)
     resourceID = Column(Integer, ForeignKey('resources.id'))

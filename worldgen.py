@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 import person as per
 import tile
 import base
+import Aphrodite
 from resources import Resources
 
 engine = create_engine('sqlite:///World.db')
@@ -29,4 +30,5 @@ def main():
         print(instance.firstName, instance.lastName, instance.resources.id)
     for instance in session.query(tile.Tile).order_by(tile.Tile.tid):
         print(instance.x, instance.y, instance.resources.id)
+    Aphrodite.MatchMaker(session)
 main()
